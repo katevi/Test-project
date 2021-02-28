@@ -2,23 +2,27 @@ package vinnik.networkgen;
 
 import org.apache.commons.net.util.SubnetUtils;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SubnetGenerator {
-    public List<SubnetUtils.SubnetInfo> generateSubnets(int numberOfSubnets) {
-        LinkedList<SubnetUtils.SubnetInfo> subnets = new LinkedList<>();
+    public Set<SubnetUtils.SubnetInfo> generateSubnets(int numberOfSubnets) {
+        Set<SubnetUtils.SubnetInfo> subnets = new HashSet<>();
         for (int i = 0; i < numberOfSubnets; i++) {
             System.out.println(i + " = " + generateSubnet());
-            subnets.add(new SubnetUtils(generateSubnet()).getInfo());
+            String subnet = generateSubnet();
+            while (contains(subnets, subnet)) {
+                subnet = generateSubnet();
+            }
+            subnets.add(new SubnetUtils(subnet).getInfo());
         }
         return subnets;
     }
 
+    private boolean contains(Set<SubnetUtils.SubnetInfo> subnets, String subnet) {
+        return subnets.stream().anyMatch(t -> t.getCidrSignature().equals(subnet));
+    }
 
     private String generateSubnet() {
         Random r = new Random();
