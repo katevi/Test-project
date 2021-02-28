@@ -24,7 +24,6 @@ public class BestSubnetCalculationManager {
                 SubnetRefiner refiner = new SubnetRefiner();
                 SubnetUtils.SubnetInfo bestSubnet = refiner.refineSubnet(ip, subnets);
                 if (bestSubnet != null) {
-                    System.out.println("best subnet is: " + bestSubnet.getCidrSignature());
                     fileManager.writeOutputFile(bestSubnet.getCidrSignature());
                     fileManager.writeGenFile(subnets
                             .stream()
@@ -32,7 +31,7 @@ public class BestSubnetCalculationManager {
                             .collect(Collectors.toList()));
                 }
             } catch (IOException e) {
-                System.out.println("Error occurred during working with file.");
+                System.out.println(e.getMessage());
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());

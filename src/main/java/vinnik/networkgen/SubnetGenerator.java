@@ -10,7 +10,6 @@ public class SubnetGenerator {
     public Set<SubnetUtils.SubnetInfo> generateSubnets(int numberOfSubnets) {
         Set<SubnetUtils.SubnetInfo> subnets = new HashSet<>();
         for (int i = 0; i < numberOfSubnets; i++) {
-            System.out.println(i + " = " + generateSubnet());
             String subnet = generateSubnet();
             while (contains(subnets, subnet)) {
                 subnet = generateSubnet();
