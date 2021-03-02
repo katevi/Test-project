@@ -16,8 +16,8 @@ public class SubnetGeneratorTest {
     public void generateSubnets1() {
         int number = 10;
         Set<SubnetUtils.SubnetInfo> subnets = generator.generateSubnets(number);
-        Assert.assertTrue(isSet(subnets));
-        Assert.assertEquals(number, subnets.size());
+        assertTrue(isSet(subnets));
+        assertEquals(number, subnets.size());
 
     }
 
@@ -26,8 +26,17 @@ public class SubnetGeneratorTest {
         int number = -20;
         int actualNumber = 0;
         Set<SubnetUtils.SubnetInfo> subnets = generator.generateSubnets(number);
-        Assert.assertTrue(isSet(subnets));
-        Assert.assertEquals(actualNumber, subnets.size());
+        assertTrue(isSet(subnets));
+        assertEquals(actualNumber, subnets.size());
+    }
+
+    @Test
+    public void generateSubnets3() {
+        int number = 100;
+        int actualNumber = 100;
+        Set<SubnetUtils.SubnetInfo> subnets = generator.generateSubnets(number);
+        assertTrue(isSet(subnets));
+        assertEquals(actualNumber, subnets.size());
     }
 
     private boolean isSet(Set<SubnetUtils.SubnetInfo> subnets) {

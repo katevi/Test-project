@@ -10,12 +10,13 @@ public class SubnetRefiner {
 
     public SubnetUtils.SubnetInfo refineSubnet(String ipAddress,
                                                Set<SubnetUtils.SubnetInfo> subnets) {
-        SubnetUtils.SubnetInfo posSub = subnets
-                .stream()
-                .filter(t -> t.isInRange(ipAddress))
-                .max(Comparator.comparing(SubnetUtils.SubnetInfo::getNetmask))
-                .orElse(null);
-        return posSub;
+        SubnetUtils.SubnetInfo matchingSubnets = subnets
+            .stream()
+            .filter(t -> t.isInRange(ipAddress))
+            .max(Comparator.comparing(SubnetUtils.SubnetInfo::getNetmask))
+            .orElse(null);
+        return matchingSubnets;
+
     }
 }
 

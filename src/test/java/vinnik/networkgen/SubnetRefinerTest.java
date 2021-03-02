@@ -95,4 +95,20 @@ public class SubnetRefinerTest {
         Assert.assertEquals(bestSubnet, actualBestSubnet.getCidrSignature());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void refineSubnet6() {
+        String ip = "224.185.3\3.28";
+        Set<SubnetUtils.SubnetInfo> subnets = Stream.of(
+                "224.184.0.0/15",
+                "224.185.37.0/19",
+                "84.73.195.56/28",
+                "224.185.37.0/21",
+                "193.50.250.64/27",
+                "224.27.126.96/13")
+                .map(t -> new SubnetUtils(t).getInfo())
+                .collect(Collectors.toSet());
+        String bestSubnet = "224.185.37.0/21";
+        SubnetUtils.SubnetInfo actualBestSubnet = refiner.refineSubnet(ip, subnets);
+        Assert.assertEquals(bestSubnet, actualBestSubnet.getCidrSignature());
+    }
 }

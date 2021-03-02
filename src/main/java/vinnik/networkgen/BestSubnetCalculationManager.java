@@ -32,10 +32,7 @@ public class BestSubnetCalculationManager {
                             .map(SubnetUtils.SubnetInfo::getCidrSignature)
                             .collect(Collectors.toList()));
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
+            } catch (IOException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         } catch (FileNotFoundException e) {

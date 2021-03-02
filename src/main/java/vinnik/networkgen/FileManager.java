@@ -1,5 +1,7 @@
 package vinnik.networkgen;
 
+import org.apache.commons.net.util.SubnetUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FileManager {
-    private Path inputPath;
+    private final Path inputPath;
     private final static int NUMBER_OF_ARGS = 2;
     private final static int INDEX_OF_NUMBER_OF_NETWORKS_ARG = 0;
     private final static int INDEX_OF_IP_ARG = 1;
@@ -43,7 +45,7 @@ public class FileManager {
         }
     }
 
-    public String getIpAddress() throws IOException {
+    public String getIpAddress() throws IOException, IllegalArgumentException {
         List<String> lines;
         try {
             lines = Files.lines(inputPath).collect(Collectors.toList());
@@ -51,7 +53,14 @@ public class FileManager {
             throw new IOException("Something went wrong during reading input file.");
         }
         checkNumberOfArgs(lines);
-        return lines.get(INDEX_OF_IP_ARG);
+        String ip = lines.get(INDEX_OF_IP_ARG);
+        try {
+            SubnetUtils.SubnetInfo mockInfo = new SubnetUtils("0.0.0.0/32").getInfo();
+            mockInfo.isInRange(ip);
+            return ip;
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid format of ip parameter.");
+        }
     }
 
     private void checkNumberOfArgs(List<String> lines) {
@@ -63,7 +72,7 @@ public class FileManager {
         }
     }
 
-    public void writeOutputFile(String bestSubnet) throws IOException {
+    protected void writeOutputFile(String bestSubnet) throws IOException {
         String path = inputPath.toFile().getAbsoluteFile().getParentFile().getPath() + "//" + OUT_PATH_NAME;
         File file = new File(path);
         try {
@@ -77,7 +86,7 @@ public class FileManager {
         }
     }
 
-    public void writeGenFile(List<String> subnets) throws IOException {
+    protected void writeGenFile(List<String> subnets) throws IOException {
         String path = inputPath.toFile().getAbsoluteFile().getParentFile().getPath() + "//" + GEN_PATH_NAME;
         File file = new File(path);
         try {
