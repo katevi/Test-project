@@ -26,11 +26,12 @@ public class SubnetGenerator {
     private String generateSubnet() {
         Random r = new Random();
         int size = 32;
+        int radix = 2;
         int mask = 1 + r.nextInt(size);
         int numberOfBitsInOctet = 8;
         LinkedList<Integer> bits = new LinkedList<>();
         for (int i = 1; i <= mask; i++) {
-            bits.add(r.nextInt(2));
+            bits.add(r.nextInt(radix));
         }
         for (int i = mask + 1; i < size; i++) {
             bits.add(0);
@@ -43,7 +44,7 @@ public class SubnetGenerator {
         List<String> octets = octetsDigits.stream().map(t -> t.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining()))
-                .map(s -> Integer.parseInt(s, 2))
+                .map(s -> Integer.parseInt(s, radix))
                 .map(Object::toString)
                 .collect(Collectors.toList());
         String subnet = octets.stream().collect(Collectors.joining(".","",""));
