@@ -28,7 +28,7 @@ public class FileManager {
     }
 
     public int getNumberOfNetworks() throws IllegalArgumentException, IOException {
-        List<String> lines = null;
+        List<String> lines;
         try {
             lines = Files.lines(inputPath).collect(Collectors.toList());
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class FileManager {
     }
 
     public String getIpAddress() throws IOException {
-        List<String> lines = null;
+        List<String> lines;
         try {
             lines = Files.lines(inputPath).collect(Collectors.toList());
         } catch (IOException e) {

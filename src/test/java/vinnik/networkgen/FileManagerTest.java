@@ -1,9 +1,24 @@
 package vinnik.networkgen;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class FileManagerTest extends TestCase {
+import static org.junit.Assert.*;
 
-    public void testParseInputFile() {
+public class FileManagerTest {
+
+    @Test
+    public void getNumberOfNetworks() {
+    }
+
+    @Test
+    public void getIpAddress() {
+    }
+
+    @Test
+    public void writeOutputFile() {
+    }
+
+    @Test
+    public void writeGenFile() {
     }
 }

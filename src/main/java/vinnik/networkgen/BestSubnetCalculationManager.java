@@ -5,7 +5,6 @@ import org.apache.commons.net.util.SubnetUtils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,11 +24,14 @@ public class BestSubnetCalculationManager {
                 SubnetUtils.SubnetInfo bestSubnet = refiner.refineSubnet(ip, subnets);
                 if (bestSubnet != null) {
                     fileManager.writeOutputFile(bestSubnet.getCidrSignature());
+                } else {
+                    fileManager.writeOutputFile("No matching networks were found.\n");
+                }
                     fileManager.writeGenFile(subnets
                             .stream()
                             .map(SubnetUtils.SubnetInfo::getCidrSignature)
                             .collect(Collectors.toList()));
-                }
+
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             } catch (IllegalArgumentException e) {
