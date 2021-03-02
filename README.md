@@ -13,6 +13,3 @@ Number of subnets and IP should be written in input file `in.txt` in following f
 To execute program enter following command:
 ``docker run -v `pwd`/<path-to-input>/:/mnt/data/ katevi/getting-best-subnet:latest``
 when `pwd` is your current directory and `<path-to-input>` is path to file `in.txt`.
-
-
-
